@@ -1,15 +1,12 @@
-FROM alpine:latest
+FROM alpine:3.17
 
-RUN apk add --update python3 py3-pip
-
-COPY app.py app/
-COPY requirements.txt app/
-COPY templates/index.html app/templates/
-COPY templates/styles.css app/templates/
+RUN apk add --update --no-cache python3 py3-pip \
+    &&  pip3 install --upgrade pip
 
 WORKDIR /app
 
+COPY . /app/
 
-RUN pip install -r requirements.txt
+RUN pip3 --no-cache-dir install -r requirements.txt
 
-CMD [ "python3", "/app/app.py" ]
+CMD [ "python3", "app.py" ]
